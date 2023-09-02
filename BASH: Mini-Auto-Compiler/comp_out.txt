@@ -1,0 +1,6 @@
+CPPTest2.cpp, g++
+CPPTest.cpp, g++
+CTest2.c, c
+CTest.c, c
+testJava2.java, javac
+testJava.java, javac

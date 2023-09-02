@@ -1,0 +1,19 @@
+CPPTest2.cpp: In function ‘int main()’:
+CPPTest2.cpp:6:5: error: ‘st’ has not been declared
+     st::cout1 << "Hello World!";
+     ^~
+CTest2.c: In function ‘main’:
+CTest2.c:6:4: warning: implicit declaration of function ‘print1f’; did you mean ‘printf’? [-Wimplicit-function-declaration]
+    print1f("Hello, World!");
+    ^~~~~~~
+    printf
+testJava2.java:3: error: class, interface, or enum expected
+public clafess testJava2 {
+       ^
+testJava2.java:4: error: class, interface, or enum expected
+  public stawfeatic void main (String [] args) {
+         ^
+testJava2.java:6: error: class, interface, or enum expected
+  }
+  ^
+3 errors
