@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * @author: Anthony Grieco
  * @Date: 9/14/2023
@@ -8,5 +10,13 @@
 public class Driver {
     public static void main (String [] args){
         System.out.println("Test"); //Test
+
+
+        //Test
+        ArrayList<KeyPair> Heap = new ArrayList<KeyPair>();
+        KeyPair pair = new KeyPair(1, 7); //Test
+        Heap.add(pair);
+
+        System.out.println(Heap.get(0).value);
     }
 }

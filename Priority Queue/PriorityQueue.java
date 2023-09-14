@@ -6,10 +6,17 @@
  * File Description: The PriorityQueue class acts as the actual implementation of the Max Heap structure.
  */
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class PriorityQueue {
-    KeyPair pair = new KeyPair(1, 1); //Test
+//    KeyPair pair = new KeyPair(1, 1); //Test
+//
+//    ArrayList<KeyPair> Heap = new ArrayList<KeyPair>();
+//
+
+//    static void Push(){
+//
+//    }
 
 //    public static void main (String[] args) {
 //        System.out.println("Hello world!");
