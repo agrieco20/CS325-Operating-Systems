@@ -9,14 +9,27 @@ import java.util.ArrayList;
  */
 public class Driver {
     public static void main (String [] args){
-        System.out.println("Test"); //Test
+//        System.out.println("Test"); //Test
 
 
+//        PriorityQueue Heap1 = new PriorityQueue();
         //Test
-        ArrayList<KeyPair> Heap = new ArrayList<KeyPair>();
-        KeyPair pair = new KeyPair(1, 7); //Test
-        Heap.add(pair);
+//        ArrayList<KeyPair> Heap = new ArrayList<KeyPair>();
+        KeyPair pair1 = new KeyPair(1, 1);
+        KeyPair pair2 = new KeyPair(7, 2);
+        KeyPair pair3 = new KeyPair(4, 3);
+//        Heap.add(pair);
+//
+//        System.out.println(Heap.get(0).value);
 
-        System.out.println(Heap.get(0).value);
+        PriorityQueue Heap1 = new PriorityQueue();
+        Heap1.push(pair1);
+        Heap1.push(pair2);
+        Heap1.push(pair3);
+
+
+        System.out.println(Heap1.pop());
+
+
     }
 }
