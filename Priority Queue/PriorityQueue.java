@@ -63,18 +63,37 @@ public class PriorityQueue {
         p_idx = 0;
         Heapify(p_idx);
 
+        //------
+        //TEMPORARY
+        for (int i = 0; i < Heap.size(); i++){
+            System.out.println(Heap.get(i).value);
+        }
+
+        //------
+
         return result.value; //Heap.get(0).value;
     }
 
     //After being called by the "Pop" Method, the "Heapify" method is responsible for reorganizing the remaining nodes after the "root" has been removed to determine which of them has the highest Key value
     private static void Heapify(int p_idx){
 //        NEED TO FIND A WAY TO PREVENT THE INDEX OUT OF BOUNDS ERROR (try to implement a "Try-Catch" experession before the 4 "leftChild" and "rightChild" statements below)
+// *****FOR WHATEVER REASON THE PROGRAM DOESN'T RECOGNIZE "leftChild" or "rightChild" and instead throws an "NullPointerException" (cannot use try-catch to ignore it...need to fix this)
 
-        leftChild.key = Heap.get((2 * p_idx) + 1).key;
-        leftChild.value = Heap.get((2 * p_idx) + 1).value;
+//        try {
+            leftChild.key = Heap.get((2 * p_idx) + 1).key;
+            leftChild.value = Heap.get((2 * p_idx) + 1).value;
+//        }
+//        catch(NullPointerException e){
+//            return;
+//        }
 
-        rightChild.key = Heap.get((2 * p_idx) + 2).key;
-        rightChild.value = Heap.get((2 * p_idx) + 2).value;
+//        try {
+            rightChild.key = Heap.get((2 * p_idx) + 2).key;
+            rightChild.value = Heap.get((2 * p_idx) + 2).value;
+//        }
+//        catch(NullPointerException e){
+//            return;
+//        }
         //---
 
         largest = Heap.get(p_idx);
