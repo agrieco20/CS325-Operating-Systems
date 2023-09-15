@@ -15,9 +15,9 @@ public class Driver {
 //        PriorityQueue Heap1 = new PriorityQueue();
         //Test
 //        ArrayList<KeyPair> Heap = new ArrayList<KeyPair>();
-        KeyPair pair1 = new KeyPair(1, 1);
-        KeyPair pair2 = new KeyPair(7, 2);
-        KeyPair pair3 = new KeyPair(4, 3);
+        KeyPair pair1 = new KeyPair(7, 1);
+        KeyPair pair2 = new KeyPair(9, 2);
+        KeyPair pair3 = new KeyPair(8, 3);
 //        Heap.add(pair);
 //
 //        System.out.println(Heap.get(0).value);

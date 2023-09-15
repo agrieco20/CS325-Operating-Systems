@@ -13,8 +13,8 @@ public class PriorityQueue {
     static KeyPair keyNode; //Used to represent the current/newest node added to the Heap. The Key of the keyNode will be compared to the Key of its parent node to see if they should be swapped (based on which element has the higher Key)
     static KeyPair parent; //Used to represent the Parent node of the keyNode (so that their Keys can be compared and their placements swapped if the keyNode's key is higher)
     static KeyPair root; //Indicates which node is at the top of the Heap (has the highest Key value and will be the node that is Popped and whose value will subsequently be returned). It is also stored at the first index of the "Heap" Arraylist
-    static KeyPair tempNode; //Acts as a temporary variable so that the "keyNode" and "parent" nodes can be swapped if "keyNode" has a higher Key than its "parent" does
-
+    static KeyPair tempNode; //Acts as a temporary variable so that the "keyNode" and "parent" nodes can be swapped if "keyNode" has a higher Key than its "parent" does.
+    static KeyPair result; //Used to store the node that was previously the "root" before being popped from the Heap and the reorganization of the structure that follows just after
     public PriorityQueue(){
 //        ArrayList<KeyPair> Heap = new ArrayList<KeyPair>();
     }
@@ -47,7 +47,8 @@ public class PriorityQueue {
     }
 
     static int pop(){
-        return Heap.get(0).value;
+        result = root;
+        return result.value; //Heap.get(0).value;
     }
 
 //    KeyPair pair = new KeyPair(1, 1); //Test
