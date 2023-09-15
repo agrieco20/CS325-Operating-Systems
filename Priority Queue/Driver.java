@@ -27,7 +27,6 @@ public class Driver {
         Heap1.push(pair2);
         Heap1.push(pair3);
 
-
         System.out.println(Heap1.pop());
 
 
