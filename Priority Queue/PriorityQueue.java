@@ -23,9 +23,7 @@ public class PriorityQueue {
     static KeyPair rightChild; //Used by the "Pop" method to determine whether the current child nodes should in fact be the parent node. If not, the "rightChild" is stored in the "Heap" arraylist at the '(2 * "p_idx") + 2' index where "p_idx" is the current index of the parent node being checked
     static KeyPair largest; //Indicates the node in the parent-child nodes currently being looked at that has the largest Key value
 
-    public PriorityQueue(){
-//        ArrayList<KeyPair> Heap = new ArrayList<KeyPair>();
-    }
+    public PriorityQueue(){} //Allows a PriorityQueue object to be instantiated
 
     //The Push Method is responsible for both adding new nodes to the "Heap" and determining what their exact position within the current "Heap" will be
     static void push(KeyPair newNode){
@@ -48,13 +46,9 @@ public class PriorityQueue {
             tempNodeKey = parent.key;
             tempNodeValue = parent.value;
 
-//            parent.key = keyNode.key;
-//            parent.value = keyNode.value;
             Heap.get(p_idx).key = keyNode.key;
             Heap.get(p_idx).value = keyNode.value;
 
-//            keyNode.key = tempNodeKey;
-//            keyNode.value = tempNodeValue;
             Heap.get(c_idx).key = tempNodeKey;
             Heap.get(c_idx).value = tempNodeValue;
 
@@ -78,26 +72,24 @@ public class PriorityQueue {
         p_idx = 0;
         Heapify(p_idx);
 
-        //------
-        //TEMPORARY
-        for (int i = 0; i < Heap.size(); i++){
-            System.out.println(Heap.get(i).value);
-        }
-        System.out.println("---");
+//        //------
+//        //Test: Used to determine what other elements are in the Priority Queue (and their order) to ensure that the structure is working correctly
+//        for (int i = 0; i < Heap.size(); i++){
+//            System.out.println(Heap.get(i).value);
+//        }
+//        System.out.println("---");
+//        //Original Root Value Being Popped is Output Here
+//        //------
 
-        //------
-
-        return result; //Heap.get(0).value;
+        return result;
     }
 
     //After being called by the "Pop" Method, the "Heapify" method is responsible for reorganizing the remaining nodes after the "root" has been removed to determine which of them has the highest Key value
     private static void Heapify(int p_idx){
-//        NEED TO FIND A WAY TO PREVENT THE INDEX OUT OF BOUNDS ERROR (try to implement a "Try-Catch" expression before the 4 "leftChild" and "rightChild" statements below)
-//CORRECTED: *****FOR WHATEVER REASON THE PROGRAM DOESN'T RECOGNIZE "leftChild" or "rightChild" and instead throws an "NullPointerException" (cannot use try-catch to ignore it...need to fix this)
-
+        //Checks to see if a node has a "leftChild", a "rightChild", or both before continuing in order to avoid an "IndexOutOfBoundsException" error
         try {
-            leftChild = Heap.get((2 * p_idx) + 1); //.key
-            leftChild = Heap.get((2 * p_idx) + 1); //.value
+            leftChild = Heap.get((2 * p_idx) + 1);
+            leftChild = Heap.get((2 * p_idx) + 1);
         }
         catch(IndexOutOfBoundsException e){
             return;
@@ -108,12 +100,12 @@ public class PriorityQueue {
             rightChild = Heap.get((2 * p_idx) + 2);
         }
         catch(IndexOutOfBoundsException e){
-            return; //NEED TO CHANGE THIS TO A BOOLEAN
+            return;
         }
-        //---
 
-        largest = Heap.get(p_idx);
-        parent = Heap.get(p_idx);
+        //Determines the node with the highest Key within the Parent-Child relationship and swaps the parent and child if applicable (ex: if the child has a larger Key than its parent)
+        largest = Heap.get(p_idx); //Reset
+        parent = Heap.get(p_idx); //Reset
 
         if (leftChild.key > largest.key){
             largest = leftChild;
@@ -137,28 +129,14 @@ public class PriorityQueue {
                 Heap.get((2 * p_idx) + 1).value = tempNodeValue;
             }
 
-            else{ //largest == rightChild
+            else{ //(largest == rightChild)
                 Heap.get(p_idx).key = rightChild.key;
                 Heap.get(p_idx).value = rightChild.value;
 
                 Heap.get((2 * p_idx) + 2).key = tempNodeKey;
                 Heap.get((2 * p_idx) + 2).value = tempNodeValue;
             }
-            Heapify(++p_idx);
+            Heapify(++p_idx); //Recursion
         }
     }
-
-
-
-//    KeyPair pair = new KeyPair(1, 1); //Test
-//
-//    ArrayList<KeyPair> Heap = new ArrayList<KeyPair>();
-//
-
-//    public static void main (String[] args) {
-//        System.out.println("Hello world!");
-//    }
-
-    //Use an ArrayList in order to easily implement the Max Heap Structure
-
 }
