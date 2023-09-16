@@ -17,7 +17,8 @@ public class PriorityQueue {
     static int tempNodeValue; //Value: Acts as a temporary variable so that the "keyNode" and "parent" nodes can be swapped if "keyNode" has a higher Key than its "parent" does.
 
     static int result; //Used to store the value of the previous "root" node before being popped from the "Heap" and the reorganization of the structure that follows just after
-    static int p_idx; //Used to keep track of which index in the arraylist the "Heap" is currently sorting through in order to determine the new parent-child structure once a "Pop" has been initialized and the original "root" has been removed
+    static int p_idx; //Used to keep track of the current Parent Index in the arraylist the "Heap" is currently sorting through in order to determine the new parent-child structure especially once a "Pop" has been initialized and the original "root" has been removed. This element is also used when determining what the next parent-child relationship to be compared will be once the "Push" Method has been called so that a new node can 'move up the tree' of the binary heap structure as much as it possibly can (based on its Key).
+    static int c_idx; //Used to keep track of the current Child Index in the arraylist the "Heap" is currently sorting through in order to determine the new parent-child structure once the "Push" Method has been called so that a new node can 'move up the tree' of the binary heap structure as much as it possibly can (based on its Key).
     static KeyPair leftChild; //Used by the "Pop" method to determine whether the current child nodes should in fact be the parent node. If not, the "leftChild" is stored in the "Heap" arraylist at the '(2 * "p_idx") + 1' index where "p_idx" is the current index of the parent node being checked
     static KeyPair rightChild; //Used by the "Pop" method to determine whether the current child nodes should in fact be the parent node. If not, the "rightChild" is stored in the "Heap" arraylist at the '(2 * "p_idx") + 2' index where "p_idx" is the current index of the parent node being checked
     static KeyPair largest; //Indicates the node in the parent-child nodes currently being looked at that has the largest Key value
@@ -37,7 +38,9 @@ public class PriorityQueue {
         }
         //Otherwise the keyNode's parent is determined
         else{
-            parent = Heap.get(((Heap.size() - 1) -1) / 2);
+            p_idx = (((Heap.size() - 1) -1)/2);
+            c_idx = (Heap.size() - 1);
+            parent = Heap.get(p_idx);
         }
 
         //Checks to see if the newest node has a greater key than its parent (and if it does the two are swapped)
@@ -45,15 +48,21 @@ public class PriorityQueue {
             tempNodeKey = parent.key;
             tempNodeValue = parent.value;
 
-            parent.key = keyNode.key;
-            parent.value = keyNode.value;
-            Heap.get(((Heap.size() - 1) -1)/2).key = keyNode.key;
-            Heap.get(((Heap.size() - 1) -1)/2).value = keyNode.value;
+//            parent.key = keyNode.key;
+//            parent.value = keyNode.value;
+            Heap.get(p_idx).key = keyNode.key;
+            Heap.get(p_idx).value = keyNode.value;
 
-            keyNode.key = tempNodeKey;
-            keyNode.value = tempNodeValue;
-            Heap.get(Heap.size() - 1).key = tempNodeKey;
-            Heap.get(Heap.size() - 1).value = tempNodeValue;
+//            keyNode.key = tempNodeKey;
+//            keyNode.value = tempNodeValue;
+            Heap.get(c_idx).key = tempNodeKey;
+            Heap.get(c_idx).value = tempNodeValue;
+
+            //Reset so that the new Node ("keyNode") can 'move up the tree' as much as possible
+            c_idx = p_idx;
+            p_idx = ((p_idx - 1)/2);
+            keyNode = Heap.get(c_idx);
+            parent = Heap.get(p_idx);
         }
     }
 
