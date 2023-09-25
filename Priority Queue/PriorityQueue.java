@@ -1,6 +1,6 @@
 /**
  * @author: Anthony Grieco
- * @Date: 9/14/2023
+ * @Date: 9/24/2023
  *
  * Project Description: This project builds a Priority Queue, which can be used to sort any number of elements based on their perceived level of importance. In this particular case, this Priority Queue takes the form of a Max Heap.
  * File Description: The PriorityQueue class acts as the actual implementation of the Max Heap structure.
@@ -15,7 +15,6 @@ public class PriorityQueue {
     static KeyPair root; //Indicates which node is at the top of the "Heap" (has the highest Key value and will be the node that is Popped and whose value will subsequently be returned). It is also stored at the first index of the "Heap" Arraylist
     static int tempNodeKey; //Key: Acts as a temporary variable so that the "keyNode" and "parent" nodes can be swapped if "keyNode" has a higher Key than its "parent" does.
     static int tempNodeValue; //Value: Acts as a temporary variable so that the "keyNode" and "parent" nodes can be swapped if "keyNode" has a higher Key than its "parent" does.
-
     static int result; //Used to store the value of the previous "root" node before being popped from the "Heap" and the reorganization of the structure that follows just after
     static int p_idx; //Used to keep track of the current Parent Index in the arraylist the "Heap" is currently sorting through in order to determine the new parent-child structure especially once a "Pop" has been initialized and the original "root" has been removed. This element is also used when determining what the next parent-child relationship to be compared will be once the "Push" Method has been called so that a new node can 'move up the tree' of the binary heap structure as much as it possibly can (based on its Key).
     static int c_idx; //Used to keep track of the current Child Index in the arraylist the "Heap" is currently sorting through in order to determine the new parent-child structure once the "Push" Method has been called so that a new node can 'move up the tree' of the binary heap structure as much as it possibly can (based on its Key).
@@ -26,7 +25,7 @@ public class PriorityQueue {
     public PriorityQueue(){} //Allows a PriorityQueue object to be instantiated
 
     //The Push Method is responsible for both adding new nodes to the "Heap" and determining what their exact position within the current "Heap" will be
-    static void push(KeyPair newNode){
+    void push(KeyPair newNode){
         Heap.add(newNode);
         keyNode = newNode;
 
@@ -61,7 +60,7 @@ public class PriorityQueue {
     }
 
     //The Pop Method is responsible for removing the "root" (first index) from the "Heap" and then reorganizing the "Heap" structure so that the remaining node with the next highest key value becomes the new "root"
-    static int pop(){
+    int pop(){
         result = root.value;
 
         Heap.get(0).key = keyNode.key;
@@ -72,14 +71,9 @@ public class PriorityQueue {
         p_idx = 0;
         Heapify(p_idx);
 
-//        //------
-//        //Test: Used to determine what other elements are in the Priority Queue (and their order) to ensure that the structure is working correctly
-//        for (int i = 0; i < Heap.size(); i++){
-//            System.out.println(Heap.get(i).value);
-//        }
-//        System.out.println("---");
-//        //Original Root Value Being Popped is Output Here
-//        //------
+        //Resets to ensure that the keyNode is always pointing at the node at the very end of the Heap after a KeyPair has been popped off of it
+        keyNode.key = Heap.get(Heap.size() - 1).key;
+        keyNode.value = Heap.get(Heap.size() - 1).value;
 
         return result;
     }
@@ -129,7 +123,7 @@ public class PriorityQueue {
                 Heap.get((2 * p_idx) + 1).value = tempNodeValue;
             }
 
-            else{ //(largest == rightChild)
+            else{
                 Heap.get(p_idx).key = rightChild.key;
                 Heap.get(p_idx).value = rightChild.value;
 
@@ -138,5 +132,13 @@ public class PriorityQueue {
             }
             Heapify(++p_idx); //Recursion
         }
+    }
+
+    int getHeapSize(){
+        return Heap.size();
+    }
+
+    KeyPair getHeapItem(int index){
+        return Heap.get(index);
     }
 }
