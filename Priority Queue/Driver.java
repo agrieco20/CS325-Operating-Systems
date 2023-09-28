@@ -25,12 +25,12 @@ public class Driver {
         pqueue.push(pair6);
         pqueue.push(pair7);
 
-        System.out.println("Current Priority Queue: ");
+        System.out.println("Current Priority Queue 1: ");
         for(int i = 0; i < pqueue.getHeapSize(); i++){
             System.out.println(pqueue.getHeapItem(i).value);
         }
 
-        System.out.println("Items Popped from Priority Queue: ");
+        System.out.println("Items Popped from Priority Queue 1: ");
         System.out.println(pqueue.pop());
         System.out.println(pqueue.pop());
         System.out.println(pqueue.pop());
@@ -38,7 +38,7 @@ public class Driver {
         KeyPair pair0 = new KeyPair(11, 0);
         pqueue.push(pair0);
 
-        System.out.println("Remaining Items Left in Priority Queue: ");
+        System.out.println("Remaining Items Left in Priority Queue 1: ");
         for(int i = 0; i < pqueue.getHeapSize(); i++){
             System.out.println(pqueue.getHeapItem(i).value);
         }
