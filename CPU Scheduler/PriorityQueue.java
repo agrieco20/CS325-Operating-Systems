@@ -35,11 +35,11 @@ public class PriorityQueue {
 
     private KeyPair smallest; //Indicates the node in the parent-child nodes currently being looked at that has the smallest Key value
 
-    private int nodeKey; //Used to temporarily store the Key (estimated completion time) of a job being moved within the Priority Queue
+    private int nodeKey; //Used to temporarily store the Key (estimated completion time) of a job being moved to the top of the Priority Queue
 
-    private SimProcessInfo nodeProcess; //Used to temporarily store a job itself that is being moved within the Priority Queue
+    private SimProcessInfo nodeProcess; //Used to temporarily store a job itself that is being moved to the top of the Priority Queue
 
-    private KeyPair result; //Used in order to output the KeyPair Key and Process being popped from one (Primary) queue so that it can be swapped to the other (Secondary) queue
+//    private KeyPair result; //Used in order to output the KeyPair Key and Process being popped from one (Primary) queue so that it can be swapped to the other (Secondary) queue (and vice versa)
 
     public PriorityQueue(){}
 
@@ -75,9 +75,13 @@ public class PriorityQueue {
     }
 
     //The Pop Method is responsible for removing the "root" (first index) from the "Heap" and then reorganizing the "Heap" structure so that the remaining node with the next lowest key value becomes the new "root"
-    public KeyPair pop(){
+    public void pop(){
         nodeKey = Heap.get(Heap.size() - 1).key;
         nodeProcess = Heap.get(Heap.size() - 1).process;
+
+//        result.key = Heap.get(0).key;
+//        result.key = Heap.get(0).key;
+//        result.process = Heap.get(0).process;
 
         Heap.get(0).key = nodeKey;
         Heap.get(0).process = nodeProcess;
@@ -87,7 +91,7 @@ public class PriorityQueue {
         p_idx = 0;
         Heapify(p_idx);
 
-        return result;
+//        return result;
     }
 
     //After being called by the "Pop" Method, the "Heapify" method is responsible for reorganizing the remaining nodes after the original "root" has been removed in order to determine which of them has the lowest Key
