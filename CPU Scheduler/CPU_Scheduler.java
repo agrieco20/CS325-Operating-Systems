@@ -48,19 +48,19 @@ public class CPU_Scheduler implements ProcessScheduler {
         if (pqueuePrimary.getHeapSize() == 0 && pqueueSecondary.getHeapSize() == 0) {
             return -1;
         }
-        boolean skipme = false;
+//        boolean skipme = false;
         if (pqSecondaryEmpty == true) {
             while (pqueuePrimary.getHeapSize() > 0 && pqueuePrimary.getHeapItem(0).process.getState() == SimProcessState.TERMINATED) {
                 pqueuePrimary.pop();
                 CPU_BurstCounter = 5;
                 if (pqueuePrimary.getHeapSize() == 0) {
-                    skipme = true;
+//                    skipme = true;
                 }
             }
 //            if (pqueuePrimary.getHeapSize() == 0) {
 //                ;
 //            }
-            if (skipme == true) {
+//            if (skipme == true) {
                 if (CPU_BurstCounter == 0) {
                     queueSwap = new KeyPair(pqueuePrimary.getHeapItem(0).key, pqueuePrimary.getHeapItem(0).process);
 
@@ -89,7 +89,7 @@ public class CPU_Scheduler implements ProcessScheduler {
                 CPU_BurstCounter -= 1;
                 p_idReturnValue = pqueuePrimary.getHeapItem(0).process.getPid();
             }
-        }
+//        }
 
         if (pqPrimaryEmpty == true) {
             while (pqueueSecondary.getHeapSize() > 0 && pqueueSecondary.getHeapItem(0).process.getState() == SimProcessState.TERMINATED) {
