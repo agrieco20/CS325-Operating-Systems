@@ -9,18 +9,18 @@
 import java.util.ArrayList;
 
 public class PriorityQueue {
-    ArrayList<KeyPair> Heap = new ArrayList<KeyPair>(); //Acts as the main structure of which the Priority Queue itself will filter though
-    KeyPair keyNode; //Used to represent the current/newest node added to the "Heap". The Key of the keyNode will be compared to the Key of its parent node to see if they should be swapped (based on which element has the higher Key)
-    KeyPair parent; //Used to represent the Parent node of the keyNode (so that their Keys can be compared and their placements swapped if the keyNode's key is higher)
-    KeyPair root; //Indicates which node is at the top of the "Heap" (has the highest Key value and will be the node that is Popped and whose value will subsequently be returned). It is also stored at the first index of the "Heap" Arraylist
-    int tempNodeKey; //Key: Acts as a temporary variable so that the "keyNode" and "parent" nodes can be swapped if "keyNode" has a higher Key than its "parent" does.
-    int tempNodeValue; //Value: Acts as a temporary variable so that the "keyNode" and "parent" nodes can be swapped if "keyNode" has a higher Key than its "parent" does.
-    int result; //Used to store the value of the previous "root" node before being popped from the "Heap" and the reorganization of the structure that follows just after
-    int p_idx; //Used to keep track of the current Parent Index in the arraylist the "Heap" is currently sorting through in order to determine the new parent-child structure especially once a "Pop" has been initialized and the original "root" has been removed. This element is also used when determining what the next parent-child relationship to be compared will be once the "Push" Method has been called so that a new node can 'move up the tree' of the binary heap structure as much as it possibly can (based on its Key).
-    int c_idx; //Used to keep track of the current Child Index in the arraylist the "Heap" is currently sorting through in order to determine the new parent-child structure once the "Push" Method has been called so that a new node can 'move up the tree' of the binary heap structure as much as it possibly can (based on its Key).
-    KeyPair leftChild; //Used by the "Pop" method to determine whether the current child nodes should in fact be the parent node. If not, the "leftChild" is stored in the "Heap" arraylist at the '(2 * "p_idx") + 1' index where "p_idx" is the current index of the parent node being checked
-    KeyPair rightChild; //Used by the "Pop" method to determine whether the current child nodes should in fact be the parent node. If not, the "rightChild" is stored in the "Heap" arraylist at the '(2 * "p_idx") + 2' index where "p_idx" is the current index of the parent node being checked
-    KeyPair largest; //Indicates the node in the parent-child nodes currently being looked at that has the largest Key value
+    private ArrayList<KeyPair> Heap = new ArrayList<KeyPair>(); //Acts as the main structure of which the Priority Queue itself will filter though
+    private KeyPair keyNode; //Used to represent the current/newest node added to the "Heap". The Key of the keyNode will be compared to the Key of its parent node to see if they should be swapped (based on which element has the higher Key)
+    private KeyPair parent; //Used to represent the Parent node of the keyNode (so that their Keys can be compared and their placements swapped if the keyNode's key is higher)
+    private KeyPair root; //Indicates which node is at the top of the "Heap" (has the highest Key value and will be the node that is Popped and whose value will subsequently be returned). It is also stored at the first index of the "Heap" Arraylist
+    private int tempNodeKey; //Key: Acts as a temporary variable so that the "keyNode" and "parent" nodes can be swapped if "keyNode" has a higher Key than its "parent" does.
+    private int tempNodeValue; //Value: Acts as a temporary variable so that the "keyNode" and "parent" nodes can be swapped if "keyNode" has a higher Key than its "parent" does.
+    private int result; //Used to store the value of the previous "root" node before being popped from the "Heap" and the reorganization of the structure that follows just after
+    private int p_idx; //Used to keep track of the current Parent Index in the arraylist the "Heap" is currently sorting through in order to determine the new parent-child structure especially once a "Pop" has been initialized and the original "root" has been removed. This element is also used when determining what the next parent-child relationship to be compared will be once the "Push" Method has been called so that a new node can 'move up the tree' of the binary heap structure as much as it possibly can (based on its Key).
+    private int c_idx; //Used to keep track of the current Child Index in the arraylist the "Heap" is currently sorting through in order to determine the new parent-child structure once the "Push" Method has been called so that a new node can 'move up the tree' of the binary heap structure as much as it possibly can (based on its Key).
+    private KeyPair leftChild; //Used by the "Pop" method to determine whether the current child nodes should in fact be the parent node. If not, the "leftChild" is stored in the "Heap" arraylist at the '(2 * "p_idx") + 1' index where "p_idx" is the current index of the parent node being checked
+    private KeyPair rightChild; //Used by the "Pop" method to determine whether the current child nodes should in fact be the parent node. If not, the "rightChild" is stored in the "Heap" arraylist at the '(2 * "p_idx") + 2' index where "p_idx" is the current index of the parent node being checked
+    private KeyPair largest; //Indicates the node in the parent-child nodes currently being looked at that has the largest Key value
 
     public PriorityQueue(){} //Allows a PriorityQueue object to be instantiated
 
