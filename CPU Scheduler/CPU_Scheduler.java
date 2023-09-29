@@ -14,8 +14,8 @@ public class CPU_Scheduler implements ProcessScheduler {
     private final PriorityQueue pqueuePrimary = new PriorityQueue(); //Acts as the initial priority queue that new processes are added to in order to be scheduled and later processed by the SAC-SimOS
     private final PriorityQueue pqueueSecondary = new PriorityQueue(); //Acts as priority queue that new processes are initially switched into once they've been processed for 5 CPU Bursts at a time. Once a process has gone through another 5 CPU Bursts once in this queue, they will be swapped back to pqueuePrimary
 
-    private int CPU_BurstCounter = 5; //Used in order to only allocate so many CPU Bursts to each process before moving onto the next process in order to ensure that this algorithm is preemptive and therefore further minimize the average amount of time that jobs are just sitting idly in one of the two queues
-    private int
+    private int CPU_BurstCounter = 10; //Used in order to only allocate so many CPU Bursts to each process before moving onto the next process in order to ensure that this algorithm is preemptive and therefore further minimize the average amount of time that jobs are just sitting idly in one of the two queues
+    private int remainingBurstCount;
 
     //Used to determine whether processes should be getting moved from Primary to Secondary or vice versa once their CPU Burst allocation has dropped to zero for that cycle
     private boolean pqPrimaryEmpty;
@@ -50,10 +50,7 @@ public class CPU_Scheduler implements ProcessScheduler {
         if (pqSecondaryEmpty == true) {
             while (pqueuePrimary.getHeapSize() > 0 && pqueuePrimary.getHeapItem(0).process.getState() == SimProcessState.TERMINATED) {
                 pqueuePrimary.pop();
-                CPU_BurstCounter = 5;
-//                if (pqueuePrimary.getHeapSize() == 0) {
-//                    System.out.println("error");
-//                }
+                CPU_BurstCounter = 10;
             }
             if (CPU_BurstCounter == 0) {
                 queueSwap = new KeyPair(pqueuePrimary.getHeapItem(0).key, pqueuePrimary.getHeapItem(0).process);
@@ -68,21 +65,19 @@ public class CPU_Scheduler implements ProcessScheduler {
                 pqueuePrimary.pop();
 
 //                pqueueSecondary.push(pqueuePrimary.pop());
-                CPU_BurstCounter = 5;
+                CPU_BurstCounter = 10;
             }
-
-            //NOTE: NEED TO FIX CPU BURST SO THAT THE LOWEST IT CAN EVER GO IS 0 IN ADDITION TO HAVING IT RESET WHENEVER A PROCESS WITH A LOWER ESTIMATED COMPLETION TIME IS INSERTED BEFORE THE PRIOR PROCESS HAS COMPLETELY FINISHED ITS OWN CPU BURST (in that case just reset the remaining CPU Bursts of that process back to 5 too)
 
             if (pqueuePrimary.getHeapSize() != 0){
-                try { //temporary
-                    pqueuePrimary.getHeapItem(0).key -= 1;
-                } catch (IndexOutOfBoundsException e) { //temporary
-                    System.out.println("error"); //temporary
-                } ;//temporary
+                if (pqueuePrimary.getHeapItem(0).key != remainingBurstCount){ //New
+                    CPU_BurstCounter = 10; //New
+                } //New
+                pqueuePrimary.getHeapItem(0).key -= 1;
                 CPU_BurstCounter -= 1;
+                remainingBurstCount = pqueuePrimary.getHeapItem(0).key; //New
+
                 p_idReturnValue = pqueuePrimary.getHeapItem(0).process.getPid();
             }
-
             else{
                 pqPrimaryEmpty = true;
             }
@@ -91,10 +86,7 @@ public class CPU_Scheduler implements ProcessScheduler {
         if (pqPrimaryEmpty == true) {
             while (pqueueSecondary.getHeapSize() > 0 && pqueueSecondary.getHeapItem(0).process.getState() == SimProcessState.TERMINATED) {
                 pqueueSecondary.pop();
-                CPU_BurstCounter = 5;
-//                if (pqueueSecondary.getHeapSize() == 0) {
-//                    System.out.println("error");
-//                }
+                CPU_BurstCounter = 10;
             }
             if (CPU_BurstCounter == 0) {
                 queueSwap = new KeyPair(pqueueSecondary.getHeapItem(0).key, pqueueSecondary.getHeapItem(0).process);
@@ -109,18 +101,18 @@ public class CPU_Scheduler implements ProcessScheduler {
                 pqueueSecondary.pop();
 
 //                pqueueSecondary.push(pqueuePrimary.pop());
-                CPU_BurstCounter = 5;
+                CPU_BurstCounter = 10;
             }
 
-            //NOTE: NEED TO FIX CPU BURST SO THAT THE LOWEST IT CAN EVER GO IS 0 IN ADDITION TO HAVING IT RESET WHENEVER A PROCESS WITH A LOWER ESTIMATED COMPLETION TIME IS INSERTED BEFORE THE PRIOR PROCESS HAS COMPLETELY FINISHED ITS OWN CPU BURST (in that case just reset the remaining CPU Bursts of that process back to 5 too)
-
             if (pqueueSecondary.getHeapSize() != 0){
-                try { //temporary
-                    pqueueSecondary.getHeapItem(0).key -= 1;
-                } catch (IndexOutOfBoundsException e) { //temporary
-                    System.out.println("error"); //temporary
-                } ;//temporary
+                if (pqueueSecondary.getHeapItem(0).key != remainingBurstCount){ //New
+                    CPU_BurstCounter = 10; //New
+                } //New
+
+                pqueueSecondary.getHeapItem(0).key -= 1;
                 CPU_BurstCounter -= 1;
+                remainingBurstCount = pqueueSecondary.getHeapItem(0).key; //New
+
                 p_idReturnValue = pqueueSecondary.getHeapItem(0).process.getPid();
             }
 
