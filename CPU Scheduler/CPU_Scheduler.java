@@ -83,7 +83,7 @@ public class CPU_Scheduler implements ProcessScheduler {
             }
             else{
                 pqPrimaryEmpty = true;
-                burstRate *= 10; //New
+                burstRate *= 10;
             }
         }
 
@@ -122,7 +122,7 @@ public class CPU_Scheduler implements ProcessScheduler {
 
             else{
                 pqSecondaryEmpty = true;
-                burstRate *= 10; //New
+                burstRate *= 10;
             }
         }
         return p_idReturnValue;
