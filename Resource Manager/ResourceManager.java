@@ -17,7 +17,8 @@ import com.sos.os.SimProcessState;
 import java.util.ArrayList;
 
 public class ResourceManager implements AccessManager {
-    ArrayList<Semaphore> resourceQueue = new ArrayList<>();
+//    ArrayList<Semaphore> resourceQueue = new ArrayList<>();
+    ArrayList<mutexLock> resourceQueue = new ArrayList<>();
 //    ArrayList<SimProcessInfo> processWaitQueue = new ArrayList<SimProcessInfo>();
     public void addResource(int resource){
         //Need to:
@@ -28,8 +29,12 @@ public class ResourceManager implements AccessManager {
         // d. Needs Signal() Method
         //2. Create an arraylist of the ResourceSemaphores so that processes can later check to see if they can use them in the "requestResource" method
 
-        Semaphore sem = new Semaphore(resource);
-        resourceQueue.add(sem);
+//        Semaphore sem = new Semaphore(resource);
+//        resourceQueue.add(sem);
+
+        mutexLock mulock = new mutexLock(resource);
+        resourceQueue.add(mulock);
+
 //        if (resource >= 5){
 //            System.out.println(resource);
 //        }
@@ -43,28 +48,40 @@ public class ResourceManager implements AccessManager {
 
         boolean requestSuccess = false;
 
+
         for (int i = 0; i < resourceQueue.size(); i++){
-            if (resource == resourceQueue.get(i).getSemID() && resourceQueue.get(i).getSemCount() >= 0){
-//                resourceQueue.get(i).semWait(process);
-                requestSuccess = true;
-                break;
+            if (resource == resourceQueue.get(i).getResourceID() && resourceQueue.get(i).resourceStatus() == true){
+                resourceQueue.get(i).acquire();
+                return true;
             }
-            if(resource == resourceQueue.get(i).getSemID() && resourceQueue.get(i).getSemCount() < 0){
-                process.setState(SimProcessState.WAITING);
-                resourceQueue.get(i).semWait(process);
-//                resourceQueue.get(i).processQueue
-                requestSuccess = false;
-                break;
+            else if (resource == resourceQueue.get(i).getResourceID() && resourceQueue.get(i).resourceStatus() == false){
+//                Process Busy Wait Queue
+                return false;
             }
         }
 
-////        if (process.getState() == SimProcessState.READY && resourceQueue.size() > 0){
-////            return true;
-////        }
-////        else /* (process.getState() == SimProcessState.READY && resourceQueue.size() < 1) */{
-////            processWaitQueue.add(process);
-////            return false;
-////        }
+//        for (int i = 0; i < resourceQueue.size(); i++){
+//            if (resource == resourceQueue.get(i).getSemID() && resourceQueue.get(i).getSemCount() >= 0){
+////                resourceQueue.get(i).semWait(process);
+//                requestSuccess = true;
+//                break;
+//            }
+//            else if(resource == resourceQueue.get(i).getSemID() && resourceQueue.get(i).getSemCount() < 0){
+////                process.setState(SimProcessState.WAITING);
+//                resourceQueue.get(i).semWait(process);
+////                resourceQueue.get(i).processQueue
+//                requestSuccess = false;
+//                break;
+//            }
+//        }
+//
+//////        if (process.getState() == SimProcessState.READY && resourceQueue.size() > 0){
+//////            return true;
+//////        }
+//////        else /* (process.getState() == SimProcessState.READY && resourceQueue.size() < 1) */{
+//////            processWaitQueue.add(process);
+//////            return false;
+//////        }
         return requestSuccess; //Works only with "true" //OLD
 //        return true;
     };
@@ -73,12 +90,17 @@ public class ResourceManager implements AccessManager {
         //1. Stop completed processes from being able to access the resource (remove process from semaphore wait queue)
             //a. Get semaphore object to call signal() and release the resource so that it can then be potentially accessed by other processes again [See textbook for how semaphores work but need to implement that logic here]
 
+//        for(int i = 0; i < resourceQueue.size(); i++){
+//            if (resourceQueue.get(i).getSemID() == resource){
+////                process.setState(SimProcessState.READY);
+//                resourceQueue.get(i).semSignal(process);
+//                break;
+//            }
+//        }
         for(int i = 0; i < resourceQueue.size(); i++){
-            if (resourceQueue.get(i).getSemID() == resource){
-                process.setState(SimProcessState.READY);
-                resourceQueue.get(i).semSignal(process);
-                break;
+            if (resourceQueue.get(i).getResourceID() == resource){
+                resourceQueue.get(i).release();
             }
         }
-    };
+    }
 }

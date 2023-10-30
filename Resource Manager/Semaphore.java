@@ -27,6 +27,7 @@ public class Semaphore {
         semID = resource;
     }
 
+
     //Returns the unique identifying value of the resource the Semaphore is limiting access to
     public int getSemID(){
         return semID;
@@ -51,6 +52,8 @@ public class Semaphore {
     //Signals that a process is now allowed to access the resource its currently requesting
     public void semSignal(SimProcessInfo process){
         semCount++;
+
+
 //        if (semCount <= 0){
 //            processQueue.remove(process);
 //            //CHANGE PROCESS.WAITING to PROCESS.READY
