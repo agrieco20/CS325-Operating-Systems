@@ -76,6 +76,13 @@ public class SimHDD {
         return true;
     }
 
+    public int nextFree(){
+        for(int i = 0;i < blocks.size();i++) {
+            if(blocks.get(i).free) return i;
+        }
+        return -1;
+    }
+
     public void freeAll(int pid){
         for(Block block : blocks){
             if(block.contents.getPid() == pid){
