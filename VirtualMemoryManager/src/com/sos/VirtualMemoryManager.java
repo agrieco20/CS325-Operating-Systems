@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
 public class VirtualMemoryManager implements MemoryManager{
     ArrayList<FrameTracker> frameVictimTrackerLRU_RAM = new ArrayList<>();
-
     ArrayList<FrameTracker> frameVictimTrackerLRU_HDD = new ArrayList<>();
 
     FrameTracker mostRecentFrame;
@@ -52,7 +51,6 @@ public class VirtualMemoryManager implements MemoryManager{
 
                 //Store the frame's contents in specific slot within SimHDD in order to prevent a potentially endless number of blocks being generated in SimHDD
                 if(SimRAM.getInstance().get(victim.getFrame()).isChanged() == true){
-//                    if (SimHDD.getInstance().find(victim.getVictimPID(), victim.getFrame()) == null){
                     if (SimHDD.getInstance().nextFree() == -1){
                         SimHDD.getInstance().addBlock();
 
@@ -67,11 +65,6 @@ public class VirtualMemoryManager implements MemoryManager{
 
                         SimHDD.getInstance().store(SimRAM.getInstance().get(victim.getFrame()), SimHDD.getInstance().nextFree());
                     }
-//                    }
-//                    else{
-//                    }
-
-////                    SimHDD.getInstance().addStoreBlock(SimRAM.getInstance().get(victim.getFrame()));
                 }
                 SimRAM.getInstance().free(victim.getFrame());
                 SimRAM.getInstance().store(info.getPage(addr), victim.getFrame());
@@ -141,7 +134,6 @@ public class VirtualMemoryManager implements MemoryManager{
 
                 //Store the frame's contents in specific slot within SimHDD in order to prevent a potentially endless number of blocks being generated in SimHDD
                 if(SimRAM.getInstance().get(victim.getFrame()).isChanged() == true){
-//                    if (SimHDD.getInstance().find(victim.getVictimPID(), victim.getFrame()) == null){
                     if (SimHDD.getInstance().nextFree() == -1){
                         SimHDD.getInstance().addBlock();
 
@@ -156,11 +148,6 @@ public class VirtualMemoryManager implements MemoryManager{
 
                         SimHDD.getInstance().store(SimRAM.getInstance().get(victim.getFrame()), SimHDD.getInstance().nextFree());
                     }
-//                    }
-//                    else{
-//                    }
-
-////                    SimHDD.getInstance().addStoreBlock(SimRAM.getInstance().get(victim.getFrame()));
                 }
                 SimRAM.getInstance().free(victim.getFrame());
                 SimRAM.getInstance().store(info.getPage(addr), victim.getFrame());
